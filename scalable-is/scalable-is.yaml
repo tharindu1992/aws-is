@@ -340,6 +340,13 @@ Resources:
           SubnetId: !Ref WSO2ISPublicSubnet1
           GroupSet:
             - !Ref BastionSecurityGroup
+      UserData: !Base64
+        'Fn::Join':
+          - |+
+
+          - - '#!/bin/bash'
+            - 'export PATH=~/.local/bin:$PATH'
+            - ${CustomUserData}
   PuppetMaster:
     Type: 'AWS::EC2::Instance'
     Properties:
@@ -371,6 +378,7 @@ Resources:
             - echo "> Set hostname to puppetmaster"
             - hostname puppetmaster
             - echo $(hostname) >> /etc/hostname
+            - ${CustomUserData}
             - echo "127.0.0.1 $(hostname)" >> /etc/hosts
             - sed -i '/\[main\]/a dns_alt_names=puppetmaster,puppet' /etc/puppet/puppet.conf
             - sed -i '/\[master\]/a autosign=true' /etc/puppet/puppet.conf
