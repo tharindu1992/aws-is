@@ -341,12 +341,11 @@ Resources:
           GroupSet:
             - !Ref BastionSecurityGroup
       UserData: !Base64
-        'Fn::Join':
-          - |+
-
-          - - '#!/bin/bash'
-            - 'export PATH=~/.local/bin:$PATH'
-            - ${CustomUserData}
+        'Fn::Sub': |
+          #cloud-boothook
+          #!/bin/bash
+          ${CustomUserData}
+          
   PuppetMaster:
     Type: 'AWS::EC2::Instance'
     Properties:
