@@ -342,7 +342,6 @@ Resources:
             - !Ref BastionSecurityGroup
       UserData: !Base64
         'Fn::Sub': |
-        
           #cloud-boothook
           #!/bin/bash
 
